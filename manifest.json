@@ -1,0 +1,22 @@
+{
+  "name": "PlanejaGEM - Programação de Atividades",
+  "short_name": "PlanejaGEM",
+  "description": "Formulário de Programação de Atividades Escoteiras - Grupo Escoteiro Memorial 350 SP",
+  "start_url": "./index.html",
+  "display": "standalone",
+  "background_color": "#ffffff",
+  "theme_color": "#004B23",
+  "orientation": "portrait-primary",
+  "icons": [
+    {
+      "src": "icons/icon-192.png",
+      "sizes": "192x192",
+      "type": "image/png"
+    },
+    {
+      "src": "icons/icon-512.png",
+      "sizes": "512x512",
+      "type": "image/png"
+    }
+  ]
+}

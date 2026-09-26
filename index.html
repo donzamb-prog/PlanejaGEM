@@ -1,0 +1,858 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>PlanejaGEM - Programação de Atividades Escoteiras</title>
+  <meta name="theme-color" content="#004B23">
+  
+  <!-- Manifest Inline para PWA -->
+  <!-- Manifest externo e ícone para iOS -->
+<link rel="manifest" href="manifest.json">
+<link rel="apple-touch-icon" href="icons/icon-192.png">
+
+  <style>
+    :root {
+      --primary-color: #252315;
+      --secondary-color: #F1A93B;
+      --bg-color: #f4f6f9;
+      --card-bg: #ffffff;
+      --text-color: #252315;
+      --border-color: #dcdfe6;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    }
+
+    body {
+      background-color: var(--bg-color);
+      color: var(--text-color);
+      line-height: 1.5;
+    }
+
+    /* CABEÇALHO ESTILO */
+    .header {
+      background-color: var(--primary-color);
+      color: #ffffff;
+      padding: 15px 20px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 15px;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.15);
+    }
+
+    .header-logo-left, .header-logo-right {
+      flex: 0 0 80px;
+      text-align: center;
+    }
+
+    .logo-img {
+      max-width: 80px;
+      max-height: 80px;
+      object-fit: contain;
+    }
+
+    .header-title {
+      flex: 1;
+      text-align: center;
+    }
+
+    .header-title h2 {
+      font-size: 0.9rem;
+      font-weight: 600;
+      letter-spacing: 0.5px;
+      margin-bottom: 2px;
+    }
+
+    .header-title h1 {
+      font-size: 1.35rem;
+      font-weight: 700;
+      margin-bottom: 4px;
+    }
+
+    .header-title p {
+      font-size: 0.78rem;
+      opacity: 0.9;
+      line-height: 1.3;
+    }
+
+    @media (max-width: 650px) {
+      .header {
+        flex-direction: column;
+      }
+      .header-logo-left, .header-logo-right {
+        flex: 0 0 auto;
+      }
+    }
+
+    /* CONTEÚDO E FORMULÁRIO */
+    .container {
+      max-width: 850px;
+      margin: 20px auto;
+      padding: 0 15px;
+    }
+
+    .card {
+      background: var(--card-bg);
+      border-radius: 10px;
+      padding: 20px;
+      margin-bottom: 20px;
+      box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+      border-left: 5px solid var(--primary-color);
+    }
+
+    .card-title {
+      font-size: 1.1rem;
+      font-weight: bold;
+      color: var(--primary-color);
+      margin-bottom: 15px;
+      border-bottom: 1px solid var(--border-color);
+      padding-bottom: 8px;
+    }
+
+    .static-badge {
+      background-color: #e8f5e9;
+      color: #1b5e20;
+      padding: 12px;
+      border-radius: 6px;
+      font-weight: bold;
+      text-align: center;
+      border: 1px solid #c8e6c9;
+      margin: 15px 0;
+    }
+
+    .form-group {
+      margin-bottom: 15px;
+    }
+
+    label {
+      display: block;
+      font-weight: 600;
+      margin-bottom: 5px;
+      font-size: 0.95rem;
+    }
+
+    label.required::after {
+      content: " *";
+      color: #d32f2f;
+    }
+
+    input[type="text"],
+    input[type="date"],
+    input[type="time"],
+    select,
+    textarea {
+      width: 100%;
+      padding: 10px;
+      border: 1px solid var(--border-color);
+      border-radius: 6px;
+      font-size: 0.95rem;
+      background-color: #fff;
+    }
+
+    textarea {
+      resize: vertical;
+      min-height: 80px;
+    }
+
+    .radio-group, .checkbox-group {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 15px;
+      margin-top: 5px;
+    }
+
+    .radio-option, .checkbox-option {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      cursor: pointer;
+    }
+
+    .game-block {
+      background: #fdfdfd;
+      border: 1px dashed #b0bec5;
+      padding: 15px;
+      border-radius: 8px;
+      margin-bottom: 15px;
+    }
+
+    /* BOTÕES */
+    .btn-group {
+      display: flex;
+      gap: 10px;
+      flex-wrap: wrap;
+      margin-top: 25px;
+    }
+
+    .btn {
+      flex: 1;
+      min-width: 150px;
+      padding: 12px 20px;
+      border: none;
+      border-radius: 6px;
+      font-size: 1rem;
+      font-weight: bold;
+      cursor: pointer;
+      text-align: center;
+      transition: background 0.2s, transform 0.1s;
+    }
+
+    .btn:active {
+      transform: scale(0.98);
+    }
+
+    .btn-save {
+      background-color: var(--secondary-color);
+      color: #333;
+    }
+
+    .btn-send {
+      background-color: #25d366;
+      color: #fff;
+    }
+
+    .btn-clear {
+      background-color: #e53935;
+      color: #fff;
+    }
+
+    .notice-box {
+      background-color: #e3f2fd;
+      color: #0d47a1;
+      padding: 10px 15px;
+      border-radius: 6px;
+      font-size: 0.85rem;
+      margin-top: 15px;
+      text-align: center;
+      border: 1px solid #bbdefb;
+    }
+
+    .hidden {
+      display: none !important;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- CABEÇALHO -->
+  <header class="header">
+    <div class="header-logo-left">
+      <img src="logo_gem.png" alt="Logo GEM" class="logo-img">
+    </div>
+    <div class="header-title">
+      <h2>UNIÃO DOS ESCOTEIROS DO BRASIL</h2>
+      <h1>Grupo Escoteiro Memorial 350 SP</h1>
+      <p>Av. Doutor Altair Martins, 520 - Raposo Tavares, Osasco SP</p>
+      <p>CEP: 06149-020 • E-mail: grupoescoteiromemorial.350@gmail.com</p>
+      <p>Tel: (11) 2884-5555 • Whats: (11) 99745-7599 / (11) 94077-4175</p>
+    </div>
+    <div class="header-logo-right">
+      <img src="logo_ueb.png" alt="Logo Escoteiros do Brasil" class="logo-img">
+    </div>
+  </header>
+
+  <!-- FORMULÁRIO -->
+  <main class="container">
+    <form id="formPlanejaGEM">
+      
+      <!-- INFORMAÇÕES BÁSICAS -->
+      <div class="card">
+        <div class="card-title">Informações Gerais</div>
+        
+        <div class="form-group">
+          <label for="dataAtividade" class="required">DATA DA ATIVIDADE</label>
+          <input type="date" id="dataAtividade" required>
+        </div>
+
+        <div class="static-badge">
+          ABERTURA - IBOA 12 HORAS
+        </div>
+
+        <div class="form-group">
+          <label for="ramoSecao" class="required">RAMO / SEÇÃO / TROPA</label>
+          <input type="text" id="ramoSecao" placeholder="Ex: Tropa Escoteira Monte Everest" required>
+        </div>
+
+        <div class="form-group">
+          <label class="required">ESTA PROGRAMAÇÃO SE REFERE A:</label>
+          <div class="radio-group">
+            <label class="radio-option">
+              <input type="radio" name="tipoProgramacao" value="SEDE" onchange="toggleTipoProgramacao()" required> SEDE
+            </label>
+            <label class="radio-option">
+              <input type="radio" name="tipoProgramacao" value="EXTERNA" onchange="toggleTipoProgramacao()"> EXTERNA
+            </label>
+          </div>
+        </div>
+      </div>
+
+      <!-- SEÇÃO SEDE -->
+      <div id="secaoSede" class="hidden">
+        <div class="card">
+          <div class="card-title">Programação na Sede</div>
+          <div id="containerJogosSede"></div>
+          
+          <div class="form-group">
+            <label>Horário Arriamento da Bandeira De Seção / Tempo:</label>
+            <input type="text" id="arriamentoSede" placeholder="Ex: 14h45 (15 min)">
+          </div>
+
+          <div class="static-badge">
+            15h ENCERRAMENTO GERAL FERRADURA
+          </div>
+        </div>
+      </div>
+
+      <!-- SEÇÃO EXTERNA -->
+      <div id="secaoExterna" class="hidden">
+        <div class="card">
+          <div class="card-title">Atividade Externa</div>
+          
+          <div class="form-group">
+            <label for="tipoExterna" class="required">TIPO DE ATIVIDADE (Selecione)</label>
+            <select id="tipoExterna">
+              <option value="">-- Selecione --</option>
+              <option value="Acampamento">Acampamento</option>
+              <option value="Acantonamento">Acantonamento</option>
+              <option value="Bivaque">Bivaque</option>
+              <option value="Jornada / Excursão">Jornada / Excursão</option>
+            </select>
+          </div>
+
+          <div class="form-group">
+            <label for="localExterna">LOCAL DA ATIVIDADE</label>
+            <input type="text" id="localExterna" placeholder="Nome do sítio, parque ou local">
+          </div>
+
+          <div class="form-group">
+            <label for="enderecoExterna">ENDEREÇO</label>
+            <input type="text" id="enderecoExterna" placeholder="Rua, Número, Bairro, Cidade">
+          </div>
+
+          <div class="form-group">
+            <label for="linkLocalizacao">COLE O LINK DA LOCALIZAÇÃO</label>
+            <input type="text" id="linkLocalizacao" placeholder="https://maps.google.com/...">
+          </div>
+        </div>
+
+        <!-- 1º DIA -->
+        <div class="card">
+          <div class="card-title">1º DIA</div>
+          <div id="containerJogosExternaDia1"></div>
+
+          <div class="form-group">
+            <label>Haverá Fogo de Conselho?</label>
+            <div class="radio-group">
+              <label class="radio-option">
+                <input type="radio" name="temFogoConselho" value="SIM" onchange="toggleFogoConselho()"> SIM
+              </label>
+              <label class="radio-option">
+                <input type="radio" name="temFogoConselho" value="NÃO" onchange="toggleFogoConselho()" checked> NÃO
+              </label>
+            </div>
+          </div>
+
+          <div id="blocoFogoConselho" class="hidden" style="background:#fff3e0; padding:15px; border-radius:8px; margin-bottom:15px;">
+            <div style="font-weight:bold; margin-bottom:10px; color:#e65100;">FOGO DE CONSELHO</div>
+            <div class="form-group">
+              <label>Responsável:</label>
+              <input type="text" id="fogoResponsavel" placeholder="Ex: Chefe Fulano">
+            </div>
+            <div class="form-group">
+              <label>Horário de início:</label>
+              <input type="text" id="fogoInicio" placeholder="Ex: 20:00">
+            </div>
+            <div class="form-group">
+              <label>Tempo para aplicação:</label>
+              <input type="text" id="fogoTempo" placeholder="Ex: 1h30">
+            </div>
+            <div class="form-group">
+              <label>Programação:</label>
+              <textarea id="fogoProgramacao" placeholder="Detalhes da programação do Fogo de Conselho..."></textarea>
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label>Haverá Jogos Noturnos?</label>
+            <div class="radio-group">
+              <label class="radio-option">
+                <input type="radio" name="temJogosNoturnos" value="SIM" onchange="toggleJogosNoturnos()"> SIM
+              </label>
+              <label class="radio-option">
+                <input type="radio" name="temJogosNoturnos" value="NÃO" onchange="toggleJogosNoturnos()" checked> NÃO
+              </label>
+            </div>
+          </div>
+
+          <div id="blocoJogosNoturnos" class="hidden">
+            <div id="containerJogosNoturnos"></div>
+          </div>
+
+          <div class="static-badge" style="background:#fbe9e7; color:#c62828; border-color:#ffccbc;">
+            22h SILÊNCIO
+          </div>
+        </div>
+
+        <!-- DIA 2 (OPCIONAL) -->
+        <div class="card">
+          <div class="checkbox-option" style="font-weight:bold; color:var(--primary-color);">
+            <input type="checkbox" id="checkDia2" onchange="toggleDia2()"> Marque se houver 2º DIA de Atividade
+          </div>
+
+          <div id="blocoDia2" class="hidden" style="margin-top:15px;">
+            <div class="card-title">2º DIA</div>
+            <div id="containerJogosExternaDia2"></div>
+
+            <!-- DIA 3 (OPCIONAL) -->
+            <div class="checkbox-option" style="font-weight:bold; color:var(--primary-color); margin-top:15px;">
+              <input type="checkbox" id="checkDia3" onchange="toggleDia3()"> Marque se houver 3º DIA de Atividade
+            </div>
+
+            <div id="blocoDia3" class="hidden" style="margin-top:15px;">
+              <div class="card-title">3º DIA</div>
+              <div id="containerJogosExternaDia3"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- BOTÕES E AVISOS -->
+      <div class="btn-group">
+        <button type="button" class="btn btn-save" onclick="salvarDadosArquivo()">SALVAR DADOS</button>
+        <button type="button" class="btn btn-send" onclick="enviarWhatsApp()">ENVIAR (WhatsApp)</button>
+        <button type="button" class="btn btn-clear" onclick="limparDados()">LIMPAR DADOS</button>
+      </div>
+
+      <div class="notice-box">
+        Aviso: As informações serão enviadas para o WhatsApp dos chefes da seção.
+      </div>
+
+    </form>
+  </main>
+
+  <!-- RODAPÉ -->
+  <footer style="background-color: var(--primary-color); color: #dddddd; padding: 25px 20px; border-top: 4px solid var(--secondary-color); font-size: 0.9rem; text-align: center; width: 100%; margin-top: 40px;">
+    <div style="max-width: 700px; margin: 0 auto; display: flex; flex-direction: column; align-items: center; gap: 12px;">
+      <img src="https://i.ibb.co/CKWP9CmS/logo-GE-M-2025.jpg" alt="Logo Grupo Escoteiro Memorial 350 SP" style="width: 60px; height: 60px; object-fit: contain; border-radius: 50%;">
+      <div>
+        <p style="margin-bottom: 5px; line-height: 1.4;"><strong>Grupo Escoteiro Memorial 350 SP</strong></p>
+        <p style="margin-bottom: 5px; line-height: 1.4;">Av. Doutor Altair Martins, 520 - Raposo Tavares, Osasco - SP, 06149-020</p>
+      </div>
+      <div>
+        <a href="https://www.instagram.com/gememorial?igsh=Z2dycGZ5bDVqdmw1" target="_blank" style="color: var(--secondary-color); text-decoration: none; font-weight: bold;">Siga-nos no Instagram: @gememorial</a>
+      </div>
+    </div>
+  </footer>
+</script>
+  
+  <script>
+    /* ========================================================
+       CONFIGURAÇÃO DO WHATSAPP (COLOQUE O NÚMERO AQUI SE DESEJAR)
+       ======================================================== */
+    const NUMERO_WHATSAPP = ""; 
+
+    let jogosSedeCount = 0;
+    let jogosExternaDia1Count = 0;
+    let jogosExternaDia2Count = 0;
+    let jogosExternaDia3Count = 0;
+
+    window.addEventListener('DOMContentLoaded', () => {
+      adicionarJogo('Sede');
+      adicionarJogo('ExternaDia1');
+      adicionarJogo('ExternaDia2');
+      adicionarJogo('ExternaDia3');
+      gerarJogosNoturnosEstaticos();
+
+      carregarDadosAutoSalvos();
+
+      document.getElementById('formPlanejaGEM').addEventListener('input', salvarStateLocalStorage);
+      document.getElementById('formPlanejaGEM').addEventListener('change', salvarStateLocalStorage);
+    });
+
+    function toggleTipoProgramacao() {
+      const tipo = document.querySelector('input[name="tipoProgramacao"]:checked')?.value;
+      const secaoSede = document.getElementById('secaoSede');
+      const secaoExterna = document.getElementById('secaoExterna');
+
+      if (tipo === 'SEDE') {
+        secaoSede.classList.remove('hidden');
+        secaoExterna.classList.add('hidden');
+      } else if (tipo === 'EXTERNA') {
+        secaoExterna.classList.remove('hidden');
+        secaoSede.classList.add('hidden');
+      } else {
+        secaoSede.classList.add('hidden');
+        secaoExterna.classList.add('hidden');
+      }
+    }
+
+    function toggleFogoConselho() {
+      const tem = document.querySelector('input[name="temFogoConselho"]:checked')?.value;
+      const bloco = document.getElementById('blocoFogoConselho');
+      if (tem === 'SIM') bloco.classList.remove('hidden');
+      else bloco.classList.add('hidden');
+    }
+
+    function toggleJogosNoturnos() {
+      const tem = document.querySelector('input[name="temJogosNoturnos"]:checked')?.value;
+      const bloco = document.getElementById('blocoJogosNoturnos');
+      if (tem === 'SIM') bloco.classList.remove('hidden');
+      else bloco.classList.add('hidden');
+    }
+
+    function toggleDia2() {
+      const check = document.getElementById('checkDia2').checked;
+      const bloco = document.getElementById('blocoDia2');
+      if (check) bloco.classList.remove('hidden');
+      else bloco.classList.add('hidden');
+    }
+
+    function toggleDia3() {
+      const check = document.getElementById('checkDia3').checked;
+      const bloco = document.getElementById('blocoDia3');
+      if (check) bloco.classList.remove('hidden');
+      else bloco.classList.add('hidden');
+    }
+
+    /* GERADOR DE BLOCOS DE JOGOS DINÂMICOS */
+    function adicionarJogo(contexto) {
+      let count = 0;
+      let containerId = '';
+
+      if (contexto === 'Sede') {
+        jogosSedeCount++;
+        count = jogosSedeCount;
+        containerId = 'containerJogosSede';
+      } else if (contexto === 'ExternaDia1') {
+        jogosExternaDia1Count++;
+        count = jogosExternaDia1Count;
+        containerId = 'containerJogosExternaDia1';
+      } else if (contexto === 'ExternaDia2') {
+        jogosExternaDia2Count++;
+        count = jogosExternaDia2Count;
+        containerId = 'containerJogosExternaDia2';
+      } else if (contexto === 'ExternaDia3') {
+        jogosExternaDia3Count++;
+        count = jogosExternaDia3Count;
+        containerId = 'containerJogosExternaDia3';
+      }
+
+      const container = document.getElementById(containerId);
+      const titleLabel = count === 1 ? 'Jogo 1 (quebra-gelo)' : `Jogo ${count}`;
+
+      const div = document.createElement('div');
+      div.className = 'game-block';
+      div.id = `block_${contexto}_${count}`;
+      div.innerHTML = `
+        <div style="font-weight:bold; color:var(--primary-color); margin-bottom:10px;">${titleLabel}</div>
+        <div class="form-group">
+          <label>Nome:</label>
+          <input type="text" id="nome_${contexto}_${count}">
+        </div>
+        <div class="form-group">
+          <label>Responsável:</label>
+          <input type="text" id="resp_${contexto}_${count}">
+        </div>
+        <div class="form-group">
+          <label>Horário de início:</label>
+          <input type="text" id="inicio_${contexto}_${count}">
+        </div>
+        <div class="form-group">
+          <label>Tempo para aplicação:</label>
+          <input type="text" id="tempo_${contexto}_${count}">
+        </div>
+        <div class="form-group">
+          <label>F.A.C.E.I.S:</label>
+          <input type="text" id="faceis_${contexto}_${count}" placeholder="Ex: F, A, C">
+        </div>
+        <div class="form-group">
+          <label>Material necessário:</label>
+          <input type="text" id="material_${contexto}_${count}">
+        </div>
+        <div class="form-group">
+          <label>Ambientação:</label>
+          <input type="text" id="ambientacao_${contexto}_${count}">
+        </div>
+        <div class="form-group">
+          <label>Observações:</label>
+          <textarea id="obs_${contexto}_${count}"></textarea>
+        </div>
+        <div class="form-group" style="background:#f5f5f5; padding:10px; border-radius:6px;">
+          <label>Tem outro jogo ou atividade após esta?</label>
+          <div class="radio-group">
+            <label class="radio-option">
+              <input type="radio" name="temMais_${contexto}_${count}" value="SIM" onchange="tratarProximoJogo('${contexto}', ${count}, true)"> SIM
+            </label>
+            <label class="radio-option">
+              <input type="radio" name="temMais_${contexto}_${count}" value="NÃO" onchange="tratarProximoJogo('${contexto}', ${count}, false)" checked> NÃO
+            </label>
+          </div>
+        </div>
+        <div id="subContainer_${contexto}_${count}"></div>
+      `;
+      container.appendChild(div);
+    }
+
+    function tratarProximoJogo(contexto, indexAtual, querMais) {
+      let proxCount = indexAtual + 1;
+      let nextBlock = document.getElementById(`block_${contexto}_${proxCount}`);
+      
+      if (querMais) {
+        if (!nextBlock) {
+          adicionarJogo(contexto);
+        }
+      }
+      salvarStateLocalStorage();
+    }
+
+    function gerarJogosNoturnosEstaticos() {
+      const container = document.getElementById('containerJogosNoturnos');
+      let html = '';
+      [1, 2].forEach(n => {
+        html += `
+          <div class="game-block" style="border-color:#795548;">
+            <div style="font-weight:bold; color:#5d4037; margin-bottom:10px;">JOGO NOTURNO 0${n}</div>
+            <div class="form-group"><label>Nome:</label><input type="text" id="jn_nome_${n}"></div>
+            <div class="form-group"><label>Responsável:</label><input type="text" id="jn_resp_${n}"></div>
+            <div class="form-group"><label>Horário de início:</label><input type="text" id="jn_inicio_${n}"></div>
+            <div class="form-group"><label>Tempo para aplicação:</label><input type="text" id="jn_tempo_${n}"></div>
+            <div class="form-group"><label>F.A.C.E.I.S:</label><input type="text" id="jn_faceis_${n}"></div>
+            <div class="form-group"><label>Material necessário:</label><input type="text" id="jn_material_${n}"></div>
+            <div class="form-group"><label>Ambientação:</label><input type="text" id="jn_ambientacao_${n}"></div>
+            <div class="form-group"><label>Observações:</label><textarea id="jn_obs_${n}"></textarea></div>
+          </div>
+        `;
+      });
+      container.innerHTML = html;
+    }
+
+    /* AUTO-SAVE EM LOCALSTORAGE */
+    function salvarStateLocalStorage() {
+      const form = document.getElementById('formPlanejaGEM');
+      const inputs = form.querySelectorAll('input, select, textarea');
+      const data = {};
+
+      inputs.forEach(input => {
+        if (input.type === 'radio' || input.type === 'checkbox') {
+          if (input.checked) data[input.id || input.name + '_' + input.value] = true;
+        } else {
+          if (input.id) data[input.id] = input.value;
+        }
+      });
+
+      localStorage.setItem('PLANEJAGEM_DATA_CACHE', JSON.stringify(data));
+    }
+
+    function carregarDadosAutoSalvos() {
+      const saved = localStorage.getItem('PLANEJAGEM_DATA_CACHE');
+      if (!saved) return;
+
+      const data = JSON.parse(saved);
+      
+      Object.keys(data).forEach(key => {
+        if (key.startsWith('nome_Sede_')) {
+          let num = parseInt(key.replace('nome_Sede_', ''));
+          while (jogosSedeCount < num) adicionarJogo('Sede');
+        }
+        if (key.startsWith('nome_ExternaDia1_')) {
+          let num = parseInt(key.replace('nome_ExternaDia1_', ''));
+          while (jogosExternaDia1Count < num) adicionarJogo('ExternaDia1');
+        }
+        if (key.startsWith('nome_ExternaDia2_')) {
+          let num = parseInt(key.replace('nome_ExternaDia2_', ''));
+          while (jogosExternaDia2Count < num) adicionarJogo('ExternaDia2');
+        }
+        if (key.startsWith('nome_ExternaDia3_')) {
+          let num = parseInt(key.replace('nome_ExternaDia3_', ''));
+          while (jogosExternaDia3Count < num) adicionarJogo('ExternaDia3');
+        }
+      });
+
+      Object.keys(data).forEach(key => {
+        const el = document.getElementById(key);
+        if (el) {
+          if (el.type === 'checkbox' || el.type === 'radio') {
+            el.checked = data[key];
+          } else {
+            el.value = data[key];
+          }
+        } else {
+          const radioMatch = document.querySelector(`input[name="${key.split('_')[0]}"][value="${key.split('_')[1]}"]`);
+          if (radioMatch) radioMatch.checked = true;
+        }
+      });
+
+      toggleTipoProgramacao();
+      toggleFogoConselho();
+      toggleJogosNoturnos();
+      toggleDia2();
+      toggleDia3();
+    }
+
+    /* MONTAGEM DO TEXTO RELATÓRIO */
+    function gerarTextoRelatorio() {
+      const dataAtv = document.getElementById('dataAtividade').value || 'Não informada';
+      const ramo = document.getElementById('ramoSecao').value || 'Não informado';
+      const tipoProg = document.querySelector('input[name="tipoProgramacao"]:checked')?.value || 'Não selecionado';
+
+      let txt = `==================================\n`;
+      txt += `⚜️ PlanejaGEM - PROGRAMAÇÃO DE ATIVIDADE\n`;
+      txt += `Grupo Escoteiro Memorial 350 SP\n`;
+      txt += `===================================\n\n`;
+      txt += `📅 DATA: ${dataAtv}\n`;
+      txt += `⚜️ RAMO / SEÇÃO: ${ramo}\n`;
+      txt += `🚩 PROGRAMAÇÃO: ${tipoProg}\n`;
+      txt += `⏰ 12h00 - ABERTURA (IBOA)\n\n`;
+
+      if (tipoProg === 'SEDE') {
+        txt += `--- JOGOS E ATIVIDADES DE SEDE ---\n\n`;
+        txt += coletarTextoJogos('Sede', jogosSedeCount);
+        
+        const arriamento = document.getElementById('arriamentoSede').value;
+        if (arriamento) {
+          txt += `🚩 ARRIAMENTO DA BANDEIRA: ${arriamento}\n`;
+        }
+        txt += `\n⏰ 15h00 - ENCERRAMENTO GERAL FERRADURA\n`;
+
+      } else if (tipoProg === 'EXTERNA') {
+        const tipoExt = document.getElementById('tipoExterna').value;
+        const local = document.getElementById('localExterna').value;
+        const end = document.getElementById('enderecoExterna').value;
+        const link = document.getElementById('linkLocalizacao').value;
+
+        txt += `--- ATIVIDADE EXTERNA ---\n`;
+        txt += `📌 Tipo: ${tipoExt}\n`;
+        if (local) txt += `📍 Local: ${local}\n`;
+        if (end) txt += `🏠 Endereço: ${end}\n`;
+        if (link) txt += `🔗 Link Localização: ${link}\n`;
+        txt += `\n`;
+
+        txt += `===================================\n`;
+        txt += `📍 1º DIA\n`;
+        txt += `===================================\n\n`;
+        txt += coletarTextoJogos('ExternaDia1', jogosExternaDia1Count);
+
+        const temFogo = document.querySelector('input[name="temFogoConselho"]:checked')?.value;
+        if (temFogo === 'SIM') {
+          txt += `🔥 FOGO DE CONSELHO\n`;
+          let respFogo = document.getElementById('fogoResponsavel').value;
+          if (respFogo) txt += `• Responsável: ${respFogo}\n`;
+          txt += `• Início: ${document.getElementById('fogoInicio').value || 'N/I'}\n`;
+          txt += `• Duração: ${document.getElementById('fogoTempo').value || 'N/I'}\n`;
+          txt += `• Programação: ${document.getElementById('fogoProgramacao').value || 'N/I'}\n\n`;
+        }
+
+        const temJN = document.querySelector('input[name="temJogosNoturnos"]:checked')?.value;
+        if (temJN === 'SIM') {
+          txt += `🌙 JOGOS NOTURNOS\n`;
+          [1, 2].forEach(n => {
+            let nome = document.getElementById(`jn_nome_${n}`).value;
+            if (nome) {
+              txt += `• JOGO NOTURNO 0${n}: ${nome}\n`;
+              let respJN = document.getElementById(`jn_resp_${n}`).value;
+              if (respJN) txt += `  Responsável: ${respJN}\n`;
+              txt += `  Início: ${document.getElementById(`jn_inicio_${n}`).value} | Duração: ${document.getElementById(`jn_tempo_${n}`).value}\n`;
+              txt += `  F.A.C.E.I.S: ${document.getElementById(`jn_faceis_${n}`).value}\n`;
+              txt += `  Material: ${document.getElementById(`jn_material_${n}`).value}\n`;
+              txt += `  Ambientação: ${document.getElementById(`jn_ambientacao_${n}`).value}\n`;
+              txt += `  Obs: ${document.getElementById(`jn_obs_${n}`).value}\n\n`;
+            }
+          });
+        }
+
+        txt += `⏰ 22h00 - SILÊNCIO\n\n`;
+
+        if (document.getElementById('checkDia2').checked) {
+          txt += `===================================\n`;
+          txt += `📍 2º DIA\n`;
+          txt += `===================================\n\n`;
+          txt += coletarTextoJogos('ExternaDia2', jogosExternaDia2Count);
+
+          if (document.getElementById('checkDia3').checked) {
+            txt += `===================================\n`;
+            txt += `📍 3º DIA\n`;
+            txt += `===================================\n\n`;
+            txt += coletarTextoJogos('ExternaDia3', jogosExternaDia3Count);
+          }
+        }
+      }
+
+      txt += `\n===================================\n`;
+      txt += `Sempre Alerta para Servir! ⚜️`;
+
+      return txt;
+    }
+
+    function coletarTextoJogos(contexto, total) {
+      let res = '';
+      for (let i = 1; i <= total; i++) {
+        let nome = document.getElementById(`nome_${contexto}_${i}`)?.value;
+        if (nome) {
+          let label = i === 1 ? 'Jogo 1 (quebra-gelo)' : `Jogo ${i}`;
+          res += `🎮 ${label}: ${nome}\n`;
+          let resp = document.getElementById(`resp_${contexto}_${i}`)?.value;
+          if (resp) res += `• Responsável: ${resp}\n`;
+          res += `• Início: ${document.getElementById(`inicio_${contexto}_${i}`)?.value || 'N/I'} | Duração: ${document.getElementById(`tempo_${contexto}_${i}`)?.value || 'N/I'}\n`;
+          res += `• F.A.C.E.I.S: ${document.getElementById(`faceis_${contexto}_${i}`)?.value || 'N/I'}\n`;
+          res += `• Material: ${document.getElementById(`material_${contexto}_${i}`)?.value || 'N/I'}\n`;
+          res += `• Ambientação: ${document.getElementById(`ambientacao_${contexto}_${i}`)?.value || 'N/I'}\n`;
+          let obs = document.getElementById(`obs_${contexto}_${i}`)?.value;
+          if (obs) res += `• Obs: ${obs}\n`;
+          res += `\n`;
+        }
+      }
+      return res;
+    }
+
+    /* AÇÕES DOS BOTÕES */
+    function salvarDadosArquivo() {
+      const conteudo = gerarTextoRelatorio();
+      const blob = new Blob([conteudo], { type: 'text/plain;charset=utf-8' });
+      const a = document.createElement('a');
+      const dataStr = document.getElementById('dataAtividade').value || 'programacao';
+      a.href = URL.createObjectURL(blob);
+      a.download = `PlanejaGEM_${dataStr}.txt`;
+      a.click();
+      URL.revokeObjectURL(a.href);
+    }
+
+    function enviarWhatsApp() {
+      const texto = gerarTextoRelatorio();
+      const textoCodificado = encodeURIComponent(texto);
+      
+      let targetUrl = "";
+      if (NUMERO_WHATSAPP && NUMERO_WHATSAPP.trim() !== "") {
+        targetUrl = `https://wa.me/${NUMERO_WHATSAPP.trim()}?text=${textoCodificado}`;
+      } else {
+        targetUrl = `https://api.whatsapp.com/send?text=${textoCodificado}`;
+      }
+
+      window.open(targetUrl, '_blank');
+    }
+
+    function limparDados() {
+      if (confirm('Tem certeza de que deseja limpar todos os dados preenchidos?')) {
+        localStorage.removeItem('PLANEJAGEM_DATA_CACHE');
+        document.getElementById('formPlanejaGEM').reset();
+        location.reload();
+      }
+    }
+
+    /* Registrar o Service Worker para suporte Offline */
+if ('serviceWorker' in navigator) {
+  window.addEventListener('load', () => {
+    navigator.serviceWorker.register('./sw.js')
+      .then(reg => console.log('Service Worker registrado com sucesso:', reg.scope))
+      .catch(err => console.log('Falha ao registrar Service Worker:', err));
+  });
+}
+    
+  </script>
+</body>
+</html>
