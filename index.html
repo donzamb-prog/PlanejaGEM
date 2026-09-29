@@ -269,10 +269,6 @@
           <input type="date" id="dataAtividade" required>
         </div>
 
-        <div class="static-badge">
-          ABERTURA - IBOA 12 HORAS
-        </div>
-
         <div class="form-group">
           <label for="ramoSecao" class="required">RAMO / SEÇÃO / TROPA</label>
           <input type="text" id="ramoSecao" placeholder="Ex: Tropa Escoteira Monte Everest" required>
@@ -295,20 +291,41 @@
       <div id="secaoSede" class="hidden">
         <div class="card">
           <div class="card-title">Programação na Sede</div>
-          <div id="containerJogosSede"></div>
           
           <div class="form-group">
-            <label>Horário Arriamento da Bandeira De Seção / Tempo:</label>
-            <input type="text" id="arriamentoSede" placeholder="Ex: 14h45 (15 min)">
+            <label for="tipoSede" class="required">TIPO DE ATIVIDADE NA SEDE</label>
+            <select id="tipoSede" onchange="toggleTipoSede()">
+              <option value="Normal">Normal</option>
+              <option value="Outra">Outra</option>
+            </select>
           </div>
 
-          <div class="static-badge">
-            15h ENCERRAMENTO GERAL FERRADURA
+          <div id="blocoDescrevaSede" class="form-group hidden">
+            <label for="descrevaTipoSede">DESCREVA A ATIVIDADE:</label>
+            <input type="text" id="descrevaTipoSede" placeholder="Ex: Mutirão de Sede, Passagem de Ramo, Acampamento na Sede, etc.">
+          </div>
+
+          <!-- BLOCO EXCLUSIVO DA SEDE NORMAL -->
+          <div id="blocoSedeNormal">
+            <div class="static-badge">
+              ABERTURA - IBOA 12 HORAS
+            </div>
+
+            <div id="containerJogosSede"></div>
+            
+            <div class="form-group">
+              <label>Horário Arriamento da Bandeira De Seção / Tempo:</label>
+              <input type="text" id="arriamentoSede" placeholder="Ex: 14h45 (15 min)">
+            </div>
+
+            <div class="static-badge">
+              15h ENCERRAMENTO GERAL FERRADURA
+            </div>
           </div>
         </div>
       </div>
 
-      <!-- SEÇÃO EXTERNA -->
+      <!-- SEÇÃO EXTERNA (LOCAIS/DADOS) -->
       <div id="secaoExterna" class="hidden">
         <div class="card">
           <div class="card-title">Atividade Externa</div>
@@ -339,10 +356,19 @@
             <input type="text" id="linkLocalizacao" placeholder="https://maps.google.com/...">
           </div>
         </div>
+      </div>
 
+      <!-- ESTRUTURA MULTIDIAS (REAPROVEITADA PARA EXTERNA OU SEDE / OUTRA) -->
+      <div id="blocoMultiDias" class="hidden">
         <!-- 1º DIA -->
         <div class="card">
           <div class="card-title">1º DIA</div>
+
+          <div class="form-group">
+            <label for="iboa_dia1">Horário Abertura - IBOA:</label>
+            <input type="text" id="iboa_dia1" placeholder="Ex: 08:00 ou 12:00">
+          </div>
+
           <div id="containerJogosExternaDia1"></div>
 
           <!-- FOGO DE CONSELHO (1º DIA) -->
@@ -408,6 +434,12 @@
 
           <div id="blocoDia2" class="hidden" style="margin-top:15px;">
             <div class="card-title">2º DIA</div>
+
+            <div class="form-group">
+              <label for="iboa_dia2">Horário Abertura - IBOA:</label>
+              <input type="text" id="iboa_dia2" placeholder="Ex: 07:30">
+            </div>
+
             <div id="containerJogosExternaDia2"></div>
 
             <!-- FOGO DE CONSELHO (2º DIA) -->
@@ -471,6 +503,12 @@
 
             <div id="blocoDia3" class="hidden" style="margin-top:15px;">
               <div class="card-title">3º DIA</div>
+
+              <div class="form-group">
+                <label for="iboa_dia3">Horário Abertura - IBOA:</label>
+                <input type="text" id="iboa_dia3" placeholder="Ex: 07:30">
+              </div>
+
               <div id="containerJogosExternaDia3"></div>
 
               <!-- FOGO DE CONSELHO (3º DIA) -->
@@ -591,16 +629,37 @@
       const tipo = document.querySelector('input[name="tipoProgramacao"]:checked')?.value;
       const secaoSede = document.getElementById('secaoSede');
       const secaoExterna = document.getElementById('secaoExterna');
+      const blocoMultiDias = document.getElementById('blocoMultiDias');
 
       if (tipo === 'SEDE') {
         secaoSede.classList.remove('hidden');
         secaoExterna.classList.add('hidden');
+        toggleTipoSede();
       } else if (tipo === 'EXTERNA') {
         secaoExterna.classList.remove('hidden');
         secaoSede.classList.add('hidden');
+        blocoMultiDias.classList.remove('hidden');
       } else {
         secaoSede.classList.add('hidden');
         secaoExterna.classList.add('hidden');
+        blocoMultiDias.classList.add('hidden');
+      }
+    }
+
+    function toggleTipoSede() {
+      const tipoSede = document.getElementById('tipoSede').value;
+      const blocoDescreva = document.getElementById('blocoDescrevaSede');
+      const blocoSedeNormal = document.getElementById('blocoSedeNormal');
+      const blocoMultiDias = document.getElementById('blocoMultiDias');
+
+      if (tipoSede === 'Outra') {
+        blocoDescreva.classList.remove('hidden');
+        blocoSedeNormal.classList.add('hidden');
+        blocoMultiDias.classList.remove('hidden');
+      } else {
+        blocoDescreva.classList.add('hidden');
+        blocoSedeNormal.classList.remove('hidden');
+        blocoMultiDias.classList.add('hidden');
       }
     }
 
@@ -733,7 +792,6 @@
           nextBlock.classList.remove('hidden');
         }
       } else {
-        // Se responder NÃO, oculta todos os jogos subsequentes
         let i = proxCount;
         while (true) {
           let b = document.getElementById(`block_${contexto}_${i}`);
@@ -830,6 +888,7 @@
       });
 
       toggleTipoProgramacao();
+      toggleTipoSede();
       toggleFogoConselho('dia1');
       toggleJogosNoturnos('dia1');
       toggleFogoConselho('dia2');
@@ -852,18 +911,25 @@
       txt += `===================================\n\n`;
       txt += `📅 DATA: ${dataAtv}\n`;
       txt += `⚜️ RAMO / SEÇÃO: ${ramo}\n`;
-      txt += `🚩 PROGRAMAÇÃO: ${tipoProg}\n`;
-      txt += `⏰ 12h00 - ABERTURA (IBOA)\n\n`;
+      txt += `🚩 PROGRAMAÇÃO: ${tipoProg}\n\n`;
 
       if (tipoProg === 'SEDE') {
-        txt += `--- JOGOS E ATIVIDADES DE SEDE ---\n\n`;
-        txt += coletarTextoJogos('Sede', jogosSedeCount);
-        
-        const arriamento = document.getElementById('arriamentoSede').value;
-        if (arriamento) {
-          txt += `🚩 ARRIAMENTO DA BANDEIRA: ${arriamento}\n`;
+        const tipoSedeVal = document.getElementById('tipoSede').value;
+        if (tipoSedeVal === 'Normal') {
+          txt += `⏰ 12h00 - ABERTURA (IBOA)\n\n`;
+          txt += `--- JOGOS E ATIVIDADES DE SEDE ---\n\n`;
+          txt += coletarTextoJogos('Sede', jogosSedeCount);
+          
+          const arriamento = document.getElementById('arriamentoSede').value;
+          if (arriamento) {
+            txt += `🚩 ARRIAMENTO DA BANDEIRA: ${arriamento}\n`;
+          }
+          txt += `\n⏰ 15h00 - ENCERRAMENTO GERAL FERRADURA\n`;
+        } else {
+          const desc = document.getElementById('descrevaTipoSede').value;
+          txt += `📌 Tipo de Atividade Sede: Outra${desc ? ` (${desc})` : ''}\n\n`;
+          txt += coletarDiasMultiplos();
         }
-        txt += `\n⏰ 15h00 - ENCERRAMENTO GERAL FERRADURA\n`;
 
       } else if (tipoProg === 'EXTERNA') {
         const tipoExt = document.getElementById('tipoExterna').value;
@@ -878,34 +944,48 @@
         if (link) txt += `🔗 Link Localização: ${link}\n`;
         txt += `\n`;
 
-        // 1º DIA
-        txt += `===================================\n`;
-        txt += `📍 1º DIA\n`;
-        txt += `===================================\n\n`;
-        txt += coletarTextoJogos('ExternaDia1', jogosExternaDia1Count);
-        txt += coletarFogoEJogosNoturnos('dia1');
-
-        // 2º DIA
-        if (document.getElementById('checkDia2').checked) {
-          txt += `===================================\n`;
-          txt += `📍 2º DIA\n`;
-          txt += `===================================\n\n`;
-          txt += coletarTextoJogos('ExternaDia2', jogosExternaDia2Count);
-          txt += coletarFogoEJogosNoturnos('dia2');
-
-          // 3º DIA
-          if (document.getElementById('checkDia3').checked) {
-            txt += `===================================\n`;
-            txt += `📍 3º DIA\n`;
-            txt += `===================================\n\n`;
-            txt += coletarTextoJogos('ExternaDia3', jogosExternaDia3Count);
-            txt += coletarFogoEJogosNoturnos('dia3');
-          }
-        }
+        txt += coletarDiasMultiplos();
       }
 
       txt += `===================================\n`;
       txt += `Sempre Alerta para Servir! ⚜️`;
+
+      return txt;
+    }
+
+    function coletarDiasMultiplos() {
+      let txt = '';
+      
+      // 1º DIA
+      txt += `===================================\n`;
+      txt += `📍 1º DIA\n`;
+      txt += `===================================\n\n`;
+      const iboa1 = document.getElementById('iboa_dia1').value;
+      if (iboa1) txt += `⏰ ABERTURA (IBOA): ${iboa1}\n\n`;
+      txt += coletarTextoJogos('ExternaDia1', jogosExternaDia1Count);
+      txt += coletarFogoEJogosNoturnos('dia1');
+
+      // 2º DIA
+      if (document.getElementById('checkDia2').checked) {
+        txt += `===================================\n`;
+        txt += `📍 2º DIA\n`;
+        txt += `===================================\n\n`;
+        const iboa2 = document.getElementById('iboa_dia2').value;
+        if (iboa2) txt += `⏰ ABERTURA (IBOA): ${iboa2}\n\n`;
+        txt += coletarTextoJogos('ExternaDia2', jogosExternaDia2Count);
+        txt += coletarFogoEJogosNoturnos('dia2');
+
+        // 3º DIA
+        if (document.getElementById('checkDia3').checked) {
+          txt += `===================================\n`;
+          txt += `📍 3º DIA\n`;
+          txt += `===================================\n\n`;
+          const iboa3 = document.getElementById('iboa_dia3').value;
+          if (iboa3) txt += `⏰ ABERTURA (IBOA): ${iboa3}\n\n`;
+          txt += coletarTextoJogos('ExternaDia3', jogosExternaDia3Count);
+          txt += coletarFogoEJogosNoturnos('dia3');
+        }
+      }
 
       return txt;
     }
