@@ -6,10 +6,9 @@
   <title>PlanejaGEM - Programação de Atividades Escoteiras</title>
   <meta name="theme-color" content="#004B23">
   
-  <!-- Manifest Inline para PWA -->
   <!-- Manifest externo e ícone para iOS -->
-<link rel="manifest" href="manifest.json">
-<link rel="apple-touch-icon" href="icons/icon-192.png">
+  <link rel="manifest" href="manifest.json">
+  <link rel="apple-touch-icon" href="icons/icon-192.png">
 
   <style>
     :root {
@@ -346,52 +345,54 @@
           <div class="card-title">1º DIA</div>
           <div id="containerJogosExternaDia1"></div>
 
+          <!-- FOGO DE CONSELHO (1º DIA) -->
           <div class="form-group">
             <label>Haverá Fogo de Conselho?</label>
             <div class="radio-group">
               <label class="radio-option">
-                <input type="radio" name="temFogoConselho" value="SIM" onchange="toggleFogoConselho()"> SIM
+                <input type="radio" name="temFogoConselho_dia1" value="SIM" onchange="toggleFogoConselho('dia1')"> SIM
               </label>
               <label class="radio-option">
-                <input type="radio" name="temFogoConselho" value="NÃO" onchange="toggleFogoConselho()" checked> NÃO
+                <input type="radio" name="temFogoConselho_dia1" value="NÃO" onchange="toggleFogoConselho('dia1')" checked> NÃO
               </label>
             </div>
           </div>
 
-          <div id="blocoFogoConselho" class="hidden" style="background:#fff3e0; padding:15px; border-radius:8px; margin-bottom:15px;">
-            <div style="font-weight:bold; margin-bottom:10px; color:#e65100;">FOGO DE CONSELHO</div>
+          <div id="blocoFogoConselho_dia1" class="hidden" style="background:#fff3e0; padding:15px; border-radius:8px; margin-bottom:15px;">
+            <div style="font-weight:bold; margin-bottom:10px; color:#e65100;">FOGO DE CONSELHO - 1º DIA</div>
             <div class="form-group">
               <label>Responsável:</label>
-              <input type="text" id="fogoResponsavel" placeholder="Ex: Chefe Fulano">
+              <input type="text" id="fogoResponsavel_dia1" placeholder="Ex: Chefe Fulano">
             </div>
             <div class="form-group">
               <label>Horário de início:</label>
-              <input type="text" id="fogoInicio" placeholder="Ex: 20:00">
+              <input type="text" id="fogoInicio_dia1" placeholder="Ex: 20:00">
             </div>
             <div class="form-group">
               <label>Tempo para aplicação:</label>
-              <input type="text" id="fogoTempo" placeholder="Ex: 1h30">
+              <input type="text" id="fogoTempo_dia1" placeholder="Ex: 1h30">
             </div>
             <div class="form-group">
               <label>Programação:</label>
-              <textarea id="fogoProgramacao" placeholder="Detalhes da programação do Fogo de Conselho..."></textarea>
+              <textarea id="fogoProgramacao_dia1" placeholder="Detalhes da programação do Fogo de Conselho..."></textarea>
             </div>
           </div>
 
+          <!-- JOGOS NOTURNOS (1º DIA) -->
           <div class="form-group">
             <label>Haverá Jogos Noturnos?</label>
             <div class="radio-group">
               <label class="radio-option">
-                <input type="radio" name="temJogosNoturnos" value="SIM" onchange="toggleJogosNoturnos()"> SIM
+                <input type="radio" name="temJogosNoturnos_dia1" value="SIM" onchange="toggleJogosNoturnos('dia1')"> SIM
               </label>
               <label class="radio-option">
-                <input type="radio" name="temJogosNoturnos" value="NÃO" onchange="toggleJogosNoturnos()" checked> NÃO
+                <input type="radio" name="temJogosNoturnos_dia1" value="NÃO" onchange="toggleJogosNoturnos('dia1')" checked> NÃO
               </label>
             </div>
           </div>
 
-          <div id="blocoJogosNoturnos" class="hidden">
-            <div id="containerJogosNoturnos"></div>
+          <div id="blocoJogosNoturnos_dia1" class="hidden">
+            <div id="containerJogosNoturnos_dia1"></div>
           </div>
 
           <div class="static-badge" style="background:#fbe9e7; color:#c62828; border-color:#ffccbc;">
@@ -409,14 +410,123 @@
             <div class="card-title">2º DIA</div>
             <div id="containerJogosExternaDia2"></div>
 
+            <!-- FOGO DE CONSELHO (2º DIA) -->
+            <div class="form-group">
+              <label>Haverá Fogo de Conselho?</label>
+              <div class="radio-group">
+                <label class="radio-option">
+                  <input type="radio" name="temFogoConselho_dia2" value="SIM" onchange="toggleFogoConselho('dia2')"> SIM
+                </label>
+                <label class="radio-option">
+                  <input type="radio" name="temFogoConselho_dia2" value="NÃO" onchange="toggleFogoConselho('dia2')" checked> NÃO
+                </label>
+              </div>
+            </div>
+
+            <div id="blocoFogoConselho_dia2" class="hidden" style="background:#fff3e0; padding:15px; border-radius:8px; margin-bottom:15px;">
+              <div style="font-weight:bold; margin-bottom:10px; color:#e65100;">FOGO DE CONSELHO - 2º DIA</div>
+              <div class="form-group">
+                <label>Responsável:</label>
+                <input type="text" id="fogoResponsavel_dia2" placeholder="Ex: Chefe Fulano">
+              </div>
+              <div class="form-group">
+                <label>Horário de início:</label>
+                <input type="text" id="fogoInicio_dia2" placeholder="Ex: 20:00">
+              </div>
+              <div class="form-group">
+                <label>Tempo para aplicação:</label>
+                <input type="text" id="fogoTempo_dia2" placeholder="Ex: 1h30">
+              </div>
+              <div class="form-group">
+                <label>Programação:</label>
+                <textarea id="fogoProgramacao_dia2" placeholder="Detalhes da programação do Fogo de Conselho..."></textarea>
+              </div>
+            </div>
+
+            <!-- JOGOS NOTURNOS (2º DIA) -->
+            <div class="form-group">
+              <label>Haverá Jogos Noturnos?</label>
+              <div class="radio-group">
+                <label class="radio-option">
+                  <input type="radio" name="temJogosNoturnos_dia2" value="SIM" onchange="toggleJogosNoturnos('dia2')"> SIM
+                </label>
+                <label class="radio-option">
+                  <input type="radio" name="temJogosNoturnos_dia2" value="NÃO" onchange="toggleJogosNoturnos('dia2')" checked> NÃO
+                </label>
+              </div>
+            </div>
+
+            <div id="blocoJogosNoturnos_dia2" class="hidden">
+              <div id="containerJogosNoturnos_dia2"></div>
+            </div>
+
+            <div class="static-badge" style="background:#fbe9e7; color:#c62828; border-color:#ffccbc;">
+              22h SILÊNCIO
+            </div>
+
             <!-- DIA 3 (OPCIONAL) -->
-            <div class="checkbox-option" style="font-weight:bold; color:var(--primary-color); margin-top:15px;">
+            <div class="checkbox-option" style="font-weight:bold; color:var(--primary-color); margin-top:25px;">
               <input type="checkbox" id="checkDia3" onchange="toggleDia3()"> Marque se houver 3º DIA de Atividade
             </div>
 
             <div id="blocoDia3" class="hidden" style="margin-top:15px;">
               <div class="card-title">3º DIA</div>
               <div id="containerJogosExternaDia3"></div>
+
+              <!-- FOGO DE CONSELHO (3º DIA) -->
+              <div class="form-group">
+                <label>Haverá Fogo de Conselho?</label>
+                <div class="radio-group">
+                  <label class="radio-option">
+                    <input type="radio" name="temFogoConselho_dia3" value="SIM" onchange="toggleFogoConselho('dia3')"> SIM
+                  </label>
+                  <label class="radio-option">
+                    <input type="radio" name="temFogoConselho_dia3" value="NÃO" onchange="toggleFogoConselho('dia3')" checked> NÃO
+                  </label>
+                </div>
+              </div>
+
+              <div id="blocoFogoConselho_dia3" class="hidden" style="background:#fff3e0; padding:15px; border-radius:8px; margin-bottom:15px;">
+                <div style="font-weight:bold; margin-bottom:10px; color:#e65100;">FOGO DE CONSELHO - 3º DIA</div>
+                <div class="form-group">
+                  <label>Responsável:</label>
+                  <input type="text" id="fogoResponsavel_dia3" placeholder="Ex: Chefe Fulano">
+                </div>
+                <div class="form-group">
+                  <label>Horário de início:</label>
+                  <input type="text" id="fogoInicio_dia3" placeholder="Ex: 20:00">
+                </div>
+                <div class="form-group">
+                  <label>Tempo para aplicação:</label>
+                  <input type="text" id="fogoTempo_dia3" placeholder="Ex: 1h30">
+                </div>
+                <div class="form-group">
+                  <label>Programação:</label>
+                  <textarea id="fogoProgramacao_dia3" placeholder="Detalhes da programação do Fogo de Conselho..."></textarea>
+                </div>
+              </div>
+
+              <!-- JOGOS NOTURNOS (3º DIA) -->
+              <div class="form-group">
+                <label>Haverá Jogos Noturnos?</label>
+                <div class="radio-group">
+                  <label class="radio-option">
+                    <input type="radio" name="temJogosNoturnos_dia3" value="SIM" onchange="toggleJogosNoturnos('dia3')"> SIM
+                  </label>
+                  <label class="radio-option">
+                    <input type="radio" name="temJogosNoturnos_dia3" value="NÃO" onchange="toggleJogosNoturnos('dia3')" checked> NÃO
+                  </label>
+                </div>
+              </div>
+
+              <div id="blocoJogosNoturnos_dia3" class="hidden">
+                <div id="containerJogosNoturnos_dia3"></div>
+              </div>
+
+              <div class="static-badge" style="background:#fbe9e7; color:#c62828; border-color:#ffccbc;">
+                22h SILÊNCIO
+              </div>
+
             </div>
           </div>
         </div>
@@ -449,11 +559,10 @@
       </div>
     </div>
   </footer>
-</script>
-  
+
   <script>
     /* ========================================================
-       CONFIGURAÇÃO DO WHATSAPP (COLOQUE O NÚMERO AQUI SE DESEJAR)
+       CONFIGURAÇÃO DO WHATSAPP (DEIXE VAZIO PARA ESCOLHER O GRUPO)
        ======================================================== */
     const NUMERO_WHATSAPP = ""; 
 
@@ -467,7 +576,10 @@
       adicionarJogo('ExternaDia1');
       adicionarJogo('ExternaDia2');
       adicionarJogo('ExternaDia3');
-      gerarJogosNoturnosEstaticos();
+      
+      gerarJogosNoturnosEstaticos('dia1');
+      gerarJogosNoturnosEstaticos('dia2');
+      gerarJogosNoturnosEstaticos('dia3');
 
       carregarDadosAutoSalvos();
 
@@ -492,32 +604,44 @@
       }
     }
 
-    function toggleFogoConselho() {
-      const tem = document.querySelector('input[name="temFogoConselho"]:checked')?.value;
-      const bloco = document.getElementById('blocoFogoConselho');
-      if (tem === 'SIM') bloco.classList.remove('hidden');
-      else bloco.classList.add('hidden');
+    function toggleFogoConselho(dia) {
+      const tem = document.querySelector(`input[name="temFogoConselho_${dia}"]:checked`)?.value;
+      const bloco = document.getElementById(`blocoFogoConselho_${dia}`);
+      if (tem === 'SIM') {
+        bloco.classList.remove('hidden');
+      } else {
+        bloco.classList.add('hidden');
+      }
     }
 
-    function toggleJogosNoturnos() {
-      const tem = document.querySelector('input[name="temJogosNoturnos"]:checked')?.value;
-      const bloco = document.getElementById('blocoJogosNoturnos');
-      if (tem === 'SIM') bloco.classList.remove('hidden');
-      else bloco.classList.add('hidden');
+    function toggleJogosNoturnos(dia) {
+      const tem = document.querySelector(`input[name="temJogosNoturnos_${dia}"]:checked`)?.value;
+      const bloco = document.getElementById(`blocoJogosNoturnos_${dia}`);
+      if (tem === 'SIM') {
+        bloco.classList.remove('hidden');
+      } else {
+        bloco.classList.add('hidden');
+      }
     }
 
     function toggleDia2() {
       const check = document.getElementById('checkDia2').checked;
       const bloco = document.getElementById('blocoDia2');
-      if (check) bloco.classList.remove('hidden');
-      else bloco.classList.add('hidden');
+      if (check) {
+        bloco.classList.remove('hidden');
+      } else {
+        bloco.classList.add('hidden');
+      }
     }
 
     function toggleDia3() {
       const check = document.getElementById('checkDia3').checked;
       const bloco = document.getElementById('blocoDia3');
-      if (check) bloco.classList.remove('hidden');
-      else bloco.classList.add('hidden');
+      if (check) {
+        bloco.classList.remove('hidden');
+      } else {
+        bloco.classList.add('hidden');
+      }
     }
 
     /* GERADOR DE BLOCOS DE JOGOS DINÂMICOS */
@@ -594,7 +718,6 @@
             </label>
           </div>
         </div>
-        <div id="subContainer_${contexto}_${count}"></div>
       `;
       container.appendChild(div);
     }
@@ -606,26 +729,44 @@
       if (querMais) {
         if (!nextBlock) {
           adicionarJogo(contexto);
+        } else {
+          nextBlock.classList.remove('hidden');
+        }
+      } else {
+        // Se responder NÃO, oculta todos os jogos subsequentes
+        let i = proxCount;
+        while (true) {
+          let b = document.getElementById(`block_${contexto}_${i}`);
+          if (b) {
+            b.classList.add('hidden');
+            let radioNao = document.querySelector(`input[name="temMais_${contexto}_${i}"][value="NÃO"]`);
+            if (radioNao) radioNao.checked = true;
+            i++;
+          } else {
+            break;
+          }
         }
       }
       salvarStateLocalStorage();
     }
 
-    function gerarJogosNoturnosEstaticos() {
-      const container = document.getElementById('containerJogosNoturnos');
+    function gerarJogosNoturnosEstaticos(dia) {
+      const container = document.getElementById(`containerJogosNoturnos_${dia}`);
+      if (!container) return;
+      
       let html = '';
       [1, 2].forEach(n => {
         html += `
           <div class="game-block" style="border-color:#795548;">
             <div style="font-weight:bold; color:#5d4037; margin-bottom:10px;">JOGO NOTURNO 0${n}</div>
-            <div class="form-group"><label>Nome:</label><input type="text" id="jn_nome_${n}"></div>
-            <div class="form-group"><label>Responsável:</label><input type="text" id="jn_resp_${n}"></div>
-            <div class="form-group"><label>Horário de início:</label><input type="text" id="jn_inicio_${n}"></div>
-            <div class="form-group"><label>Tempo para aplicação:</label><input type="text" id="jn_tempo_${n}"></div>
-            <div class="form-group"><label>F.A.C.E.I.S:</label><input type="text" id="jn_faceis_${n}"></div>
-            <div class="form-group"><label>Material necessário:</label><input type="text" id="jn_material_${n}"></div>
-            <div class="form-group"><label>Ambientação:</label><input type="text" id="jn_ambientacao_${n}"></div>
-            <div class="form-group"><label>Observações:</label><textarea id="jn_obs_${n}"></textarea></div>
+            <div class="form-group"><label>Nome:</label><input type="text" id="jn_nome_${dia}_${n}"></div>
+            <div class="form-group"><label>Responsável:</label><input type="text" id="jn_resp_${dia}_${n}"></div>
+            <div class="form-group"><label>Horário de início:</label><input type="text" id="jn_inicio_${dia}_${n}"></div>
+            <div class="form-group"><label>Tempo para aplicação:</label><input type="text" id="jn_tempo_${dia}_${n}"></div>
+            <div class="form-group"><label>F.A.C.E.I.S:</label><input type="text" id="jn_faceis_${dia}_${n}"></div>
+            <div class="form-group"><label>Material necessário:</label><input type="text" id="jn_material_${dia}_${n}"></div>
+            <div class="form-group"><label>Ambientação:</label><input type="text" id="jn_ambientacao_${dia}_${n}"></div>
+            <div class="form-group"><label>Observações:</label><textarea id="jn_obs_${dia}_${n}"></textarea></div>
           </div>
         `;
       });
@@ -689,8 +830,12 @@
       });
 
       toggleTipoProgramacao();
-      toggleFogoConselho();
-      toggleJogosNoturnos();
+      toggleFogoConselho('dia1');
+      toggleJogosNoturnos('dia1');
+      toggleFogoConselho('dia2');
+      toggleJogosNoturnos('dia2');
+      toggleFogoConselho('dia3');
+      toggleJogosNoturnos('dia3');
       toggleDia2();
       toggleDia3();
     }
@@ -701,7 +846,7 @@
       const ramo = document.getElementById('ramoSecao').value || 'Não informado';
       const tipoProg = document.querySelector('input[name="tipoProgramacao"]:checked')?.value || 'Não selecionado';
 
-      let txt = `==================================\n`;
+      let txt = `===================================\n`;
       txt += `⚜️ PlanejaGEM - PROGRAMAÇÃO DE ATIVIDADE\n`;
       txt += `Grupo Escoteiro Memorial 350 SP\n`;
       txt += `===================================\n\n`;
@@ -733,57 +878,33 @@
         if (link) txt += `🔗 Link Localização: ${link}\n`;
         txt += `\n`;
 
+        // 1º DIA
         txt += `===================================\n`;
         txt += `📍 1º DIA\n`;
         txt += `===================================\n\n`;
         txt += coletarTextoJogos('ExternaDia1', jogosExternaDia1Count);
+        txt += coletarFogoEJogosNoturnos('dia1');
 
-        const temFogo = document.querySelector('input[name="temFogoConselho"]:checked')?.value;
-        if (temFogo === 'SIM') {
-          txt += `🔥 FOGO DE CONSELHO\n`;
-          let respFogo = document.getElementById('fogoResponsavel').value;
-          if (respFogo) txt += `• Responsável: ${respFogo}\n`;
-          txt += `• Início: ${document.getElementById('fogoInicio').value || 'N/I'}\n`;
-          txt += `• Duração: ${document.getElementById('fogoTempo').value || 'N/I'}\n`;
-          txt += `• Programação: ${document.getElementById('fogoProgramacao').value || 'N/I'}\n\n`;
-        }
-
-        const temJN = document.querySelector('input[name="temJogosNoturnos"]:checked')?.value;
-        if (temJN === 'SIM') {
-          txt += `🌙 JOGOS NOTURNOS\n`;
-          [1, 2].forEach(n => {
-            let nome = document.getElementById(`jn_nome_${n}`).value;
-            if (nome) {
-              txt += `• JOGO NOTURNO 0${n}: ${nome}\n`;
-              let respJN = document.getElementById(`jn_resp_${n}`).value;
-              if (respJN) txt += `  Responsável: ${respJN}\n`;
-              txt += `  Início: ${document.getElementById(`jn_inicio_${n}`).value} | Duração: ${document.getElementById(`jn_tempo_${n}`).value}\n`;
-              txt += `  F.A.C.E.I.S: ${document.getElementById(`jn_faceis_${n}`).value}\n`;
-              txt += `  Material: ${document.getElementById(`jn_material_${n}`).value}\n`;
-              txt += `  Ambientação: ${document.getElementById(`jn_ambientacao_${n}`).value}\n`;
-              txt += `  Obs: ${document.getElementById(`jn_obs_${n}`).value}\n\n`;
-            }
-          });
-        }
-
-        txt += `⏰ 22h00 - SILÊNCIO\n\n`;
-
+        // 2º DIA
         if (document.getElementById('checkDia2').checked) {
           txt += `===================================\n`;
           txt += `📍 2º DIA\n`;
           txt += `===================================\n\n`;
           txt += coletarTextoJogos('ExternaDia2', jogosExternaDia2Count);
+          txt += coletarFogoEJogosNoturnos('dia2');
 
+          // 3º DIA
           if (document.getElementById('checkDia3').checked) {
             txt += `===================================\n`;
             txt += `📍 3º DIA\n`;
             txt += `===================================\n\n`;
             txt += coletarTextoJogos('ExternaDia3', jogosExternaDia3Count);
+            txt += coletarFogoEJogosNoturnos('dia3');
           }
         }
       }
 
-      txt += `\n===================================\n`;
+      txt += `===================================\n`;
       txt += `Sempre Alerta para Servir! ⚜️`;
 
       return txt;
@@ -792,6 +913,9 @@
     function coletarTextoJogos(contexto, total) {
       let res = '';
       for (let i = 1; i <= total; i++) {
+        let block = document.getElementById(`block_${contexto}_${i}`);
+        if (block && block.classList.contains('hidden')) continue;
+
         let nome = document.getElementById(`nome_${contexto}_${i}`)?.value;
         if (nome) {
           let label = i === 1 ? 'Jogo 1 (quebra-gelo)' : `Jogo ${i}`;
@@ -807,6 +931,45 @@
           res += `\n`;
         }
       }
+      return res;
+    }
+
+    function coletarFogoEJogosNoturnos(dia) {
+      let res = '';
+      
+      // Fogo de Conselho
+      const temFogo = document.querySelector(`input[name="temFogoConselho_${dia}"]:checked`)?.value;
+      if (temFogo === 'SIM') {
+        res += `🔥 FOGO DE CONSELHO\n`;
+        let respFogo = document.getElementById(`fogoResponsavel_${dia}`).value;
+        if (respFogo) res += `• Responsável: ${respFogo}\n`;
+        res += `• Início: ${document.getElementById(`fogoInicio_${dia}`).value || 'N/I'}\n`;
+        res += `• Duração: ${document.getElementById(`fogoTempo_${dia}`).value || 'N/I'}\n`;
+        res += `• Programação: ${document.getElementById(`fogoProgramacao_${dia}`).value || 'N/I'}\n\n`;
+      }
+
+      // Jogos Noturnos
+      const temJN = document.querySelector(`input[name="temJogosNoturnos_${dia}"]:checked`)?.value;
+      if (temJN === 'SIM') {
+        res += `🌙 JOGOS NOTURNOS\n`;
+        [1, 2].forEach(n => {
+          let nome = document.getElementById(`jn_nome_${dia}_${n}`)?.value;
+          if (nome) {
+            res += `• JOGO NOTURNO 0${n}: ${nome}\n`;
+            let respJN = document.getElementById(`jn_resp_${dia}_${n}`)?.value;
+            if (respJN) res += `  Responsável: ${respJN}\n`;
+            res += `  Início: ${document.getElementById(`jn_inicio_${dia}_${n}`)?.value || 'N/I'} | Duração: ${document.getElementById(`jn_tempo_${dia}_${n}`)?.value || 'N/I'}\n`;
+            res += `  F.A.C.E.I.S: ${document.getElementById(`jn_faceis_${dia}_${n}`)?.value || 'N/I'}\n`;
+            res += `  Material: ${document.getElementById(`jn_material_${dia}_${n}`)?.value || 'N/I'}\n`;
+            res += `  Ambientação: ${document.getElementById(`jn_ambientacao_${dia}_${n}`)?.value || 'N/I'}\n`;
+            let obs = document.getElementById(`jn_obs_${dia}_${n}`)?.value;
+            if (obs) res += `  Obs: ${obs}\n`;
+            res += `\n`;
+          }
+        });
+      }
+
+      res += `⏰ 22h00 - SILÊNCIO\n\n`;
       return res;
     }
 
@@ -845,14 +1008,13 @@
     }
 
     /* Registrar o Service Worker para suporte Offline */
-if ('serviceWorker' in navigator) {
-  window.addEventListener('load', () => {
-    navigator.serviceWorker.register('./sw.js')
-      .then(reg => console.log('Service Worker registrado com sucesso:', reg.scope))
-      .catch(err => console.log('Falha ao registrar Service Worker:', err));
-  });
-}
-    
+    if ('serviceWorker' in navigator) {
+      window.addEventListener('load', () => {
+        navigator.serviceWorker.register('./sw.js')
+          .then(reg => console.log('Service Worker registrado com sucesso:', reg.scope))
+          .catch(err => console.log('Falha ao registrar Service Worker:', err));
+      });
+    }
   </script>
 </body>
 </html>
